@@ -30,7 +30,6 @@ void main_menu()
 
 	std::string months[] = { "JAN", "FEB", "MAR","APR","MAY","JUN","JUL",
 							"AUG","SEP","OCT","NOV","DEC" };
-	int ch;
 
 	do
 	{
@@ -49,24 +48,21 @@ void main_menu()
 
 		task.display_toDay(day, mon, year);
 
-		std::cout << "\n\t\t\t[1] for options \t [2] Quit\n";
-		std::cout << "\n\t\t\t>Choice : ";
-		std::cin >> ch;
-		
-		switch (ch)
+		std::cout << "\n\t\t\t\t Press [O] for options \n";
+
+		// deleting switch 
+
+		if (_kbhit())
 		{
-		case 1: options();
-			break;
+			char ch = _getch();
 
-		case 2: exit(1);
-			break;
-
-		default: std::cout << "\n\t\t\t Invalid choice";
-			_getch();
-			break;
+			if (ch == 'o')
+			{
+				options();
+			}
 		}
-
-	} while (ch != 2);
+		
+	} while (true);
 }
 
 void options()

@@ -7,7 +7,9 @@
 
 // functions
 
-void main_menu();                
+void main_menu(); 
+
+void options();
 
 void view_all();
 

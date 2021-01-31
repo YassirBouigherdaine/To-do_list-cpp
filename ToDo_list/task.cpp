@@ -7,9 +7,7 @@
 void Task::display_toDay(int d, int m, int y)
 {
 	std::ifstream listFile;
-	listFile.open("List.txt", std::ios::in | std::ios::binary);
-
-	int count = 0;
+	listFile.open("List.txt", std::ios::in);
 
 	if (listFile.is_open())
 	{
@@ -18,11 +16,9 @@ void Task::display_toDay(int d, int m, int y)
 		std::cout << "\t\t\tDATE \t\t TIME \t\t  DISCREPTION\n";
 		std::cout << "--------------------------------------------------------------------------------------------------------\n";
 
-
-
-		while (listFile.read((char*)this, sizeof(Task)))
+		while (listFile.read((char*)this, sizeof(Task)))    // editing while loop
 		{
-			if (Day == d)
+			if (d == Day  && Year == y)
 			{
 				std::cout << "\t\t\t" << Day << "-" << Mon << "-" << Year << " \t " << Hour << ":" << Min << " \t\t  " << description << std::endl;
 				std::cout << "--------------------------------------------------------------------------------------------------------\n";
@@ -31,14 +27,11 @@ void Task::display_toDay(int d, int m, int y)
 		}
 
 	}
-	/*else if (day == 0)
-	{
-		std::cout << "\n\t\t\t\t  List is empty\n";
-	}*/
 
 	else
 	{
-		std::cout << "\n\t\tError occurred in opening the file\n";
+		std::cout << "\n\t\t\t  Failed to open file\n\n";
+		return;
 	}
 
 	listFile.close();
@@ -50,11 +43,11 @@ void Task::add_task()
 	system("cls");
 
 	std::ofstream listFile;
-	listFile.open("List.txt", std::ios::app | std::ios::binary);
+	listFile.open("List.txt", std::ios::app);
 
-	std::cout << "\t\t*******************\n\n";
+	std::cout << "\t---------------------------\n";
 	std::cout << "\n\t\t TASK DETAILS\n";
-	std::cout << "\t\t*******************\n\n";
+	std::cout << "\t---------------------------\n\n";
 
 	std:: cout << "\t Date : ";
 	std::cin >> Day >> Mon >> Year;
@@ -76,7 +69,7 @@ void Task::add_task()
 void Task::display_all()
 {
 	std::ifstream listFile;
-	listFile.open("List.txt", std::ios::in | std::ios::binary);
+	listFile.open("List.txt", std::ios::in);
 
 	listFile.read((char*)this, sizeof(Task));
 
@@ -101,7 +94,9 @@ void Task::display_all()
 	}
 	else
 	{
-		std::cout << "\n\t\tError occurred in opening the file\n";
+		std::cout << "\n\t\tFailed to open file\n";
+		_getch();
+		return;
 	}
 
 	listFile.close();
@@ -111,7 +106,7 @@ void Task::display_all()
 void Task::display_task()
 {
 	std::ifstream listFile;
-	listFile.open("List.txt", std::ios::in | std::ios::binary);
+	listFile.open("List.txt", std::ios::in);
 
 	int op;
 
@@ -172,7 +167,7 @@ void Task::display_task()
 bool Task::isExist(std::string tmp)
 {
 	std::ifstream listFile;
-	listFile.open("List.txt", std::ios::in | std::ios::binary);
+	listFile.open("List.txt", std::ios::in);
 
 	while (!listFile.eof())
 	{
@@ -193,7 +188,7 @@ bool Task::isExist(std::string tmp)
 void Task::update_task(std::string tmp)
 {
 	std::fstream listFile;
-	listFile.open("List.txt", std::ios::in | std::ios::out | std::ios::binary);
+	listFile.open("List.txt", std::ios::in | std::ios::out);
 
 	if (listFile.is_open())
 	{
@@ -224,8 +219,8 @@ void Task::update_task(std::string tmp)
 	}
 	else
 	{
-		std::cout << "\n\t\tError occurred in opening the file\n";
-		_getch();
+		std::cout << "\n\t\tFailed to open file\n";
+		exit(-1);
 	}
 
 	listFile.close();
@@ -235,8 +230,8 @@ void Task::update_task(std::string tmp)
 
 void Task::delete_task(std::string tmp)
 {
-	std::fstream listFile("List.txt", std::ios::in | std::ios::binary);
-	std::fstream newFile("tempFile.txt", std::ios::app | std::ios::binary);
+	std::fstream listFile("List.txt", std::ios::in);
+	std::fstream newFile("tempFile.txt", std::ios::app);
 
 	while (listFile.read((char*)this, sizeof(Task)))
 	{
