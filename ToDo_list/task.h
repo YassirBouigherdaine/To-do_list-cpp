@@ -4,6 +4,8 @@
 #include<fstream>
 #include<conio.h>
 #include<time.h>
+#include<Windows.h>
+#include<iomanip>
 
 
 
@@ -29,5 +31,6 @@ public:
 
 	bool isExist(std::string);
 
+	void reminder(int, int);
 };
 

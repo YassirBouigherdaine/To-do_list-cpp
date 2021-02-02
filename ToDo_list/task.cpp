@@ -16,16 +16,14 @@ void Task::display_toDay(int d, int m, int y)
 		std::cout << "\t\t\tDATE \t\t TIME \t\t  DISCREPTION\n";
 		std::cout << "--------------------------------------------------------------------------------------------------------\n";
 
-		while (listFile.read((char*)this, sizeof(Task)))    // editing while loop
+		while (listFile.read((char*)this, sizeof(Task)))   
 		{
-			if (d == Day  && Year == y)
+			if (d == Day && Mon == m+1 && Year == y)
 			{
 				std::cout << "\t\t\t" << Day << "-" << Mon << "-" << Year << " \t " << Hour << ":" << Min << " \t\t  " << description << std::endl;
 				std::cout << "--------------------------------------------------------------------------------------------------------\n";
 			}
-			
 		}
-
 	}
 
 	else
@@ -251,4 +249,23 @@ void Task::delete_task(std::string tmp)
 	std::cout << "\n\t\t\t Task was deleted successfully\n";
 	_getch();
 	return;
+}
+
+
+void Task::reminder(int hour, int min)
+{
+	std::ifstream listFile;
+	listFile.open("List.txt", std::ios::in);
+
+	if (Hour == hour && Min == min)
+	{
+		std::cout << "\n\t\t        ------------------------------------------------------\n";
+		std::cout << "\t\t        --------------------  REMINDER  ----------------------\n";
+		std::cout << "\t\t        ------------------------------------------------------\n";
+
+		std::cout << "\n \t\t\t\t  It's time to : " << description;
+		std::cout << "\n\n\t\t----------------------------------------------------------------------------\n\n";
+	}
+
+	listFile.close();
 }

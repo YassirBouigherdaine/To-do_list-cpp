@@ -23,6 +23,7 @@ void main_menu()
 
 	int h = lt.tm_hour;
 	int m = lt.tm_min;
+	int s = lt.tm_sec;
 
 	int year = 1900 + lt.tm_year;
 	int mon = lt.tm_mon;
@@ -45,12 +46,13 @@ void main_menu()
 		std::cout << "\t\t\t------------------------------------------------------\n";
 		std::cout << "\n\t\t\t\t\t    " << day << " " << months[mon] << " " << year;
 		std::cout << "\n\t\t\t------------------------------------------------------\n";
+		std::cout << "\n\t\t\t------------------------------------------------------\n";
 
 		task.display_toDay(day, mon, year);
 
-		std::cout << "\n\t\t\t\t Press [O] for options \n";
+		task.reminder(h, m);
 
-		// deleting switch 
+		std::cout << "\n\t\t\t\t Press [O] for options \n";
 
 		if (_kbhit())
 		{
@@ -61,7 +63,27 @@ void main_menu()
 				options();
 			}
 		}
-		
+
+		if (s >= 59)
+		{
+			s = 0;
+			m++;
+		}
+		if (m > 59)
+		{
+			m = 0;
+			h++;
+		}
+
+		if (h > 23)
+		{
+			m = 0;
+			h = 0;
+		}
+
+		Sleep(800);
+		s++;
+
 	} while (true);
 }
 
@@ -87,13 +109,13 @@ void options()
 
 	switch (choice)
 	{
-	case 1: creat_new_task();
+	case 1: task.add_task();
 		break;
 
-	case 2: view_task();
+	case 2: task.display_task();
 		break;
 
-	case 3: view_all();
+	case 3: task.display_all();
 		break;
 
 	case 4: break;
@@ -104,18 +126,3 @@ void options()
 	}
 }
 
-
-void creat_new_task()
-{
-	task.add_task();
-}
-
-void view_task()
-{
-	task.display_task();
-}
-
-void view_all()
-{
-	task.display_all();
-}
