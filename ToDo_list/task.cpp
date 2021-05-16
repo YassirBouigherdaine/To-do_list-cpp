@@ -3,7 +3,6 @@
 
 
 
-
 void Task::display_toDay(int d, int m, int y)
 {
 	std::ifstream listFile;
@@ -20,7 +19,8 @@ void Task::display_toDay(int d, int m, int y)
 		{
 			if (d == Day && Mon == m+1 && Year == y)
 			{
-				std::cout << "\t\t\t" << Day << "-" << Mon << "-" << Year << " \t " << Hour << ":" << Min << " \t\t  " << description << std::endl;
+				std::cout.fill('0');
+				std::cout << "\t\t\t" << std::setw(2) << Day << "-" << std::setw(2) << Mon << "-" << Year << " \t " << std::setw(2) << Hour << ":" << std::setw(2) << Min << " \t\t  " << description << std::endl;
 				std::cout << "--------------------------------------------------------------------------------------------------------\n";
 			}
 		}
@@ -52,7 +52,8 @@ void Task::add_task()
 	std::cout << "\n\t Time : ";
 	std::cin >> Hour >> Min;
 	std::cout << "\n\t Description : ";
-	std::cin >> description;
+	std::cin.ignore();
+    std::getline(std::cin, description);
 
 	listFile.write((char*)this, sizeof(Task));
     
@@ -81,7 +82,8 @@ void Task::display_all()
 
 		while (!listFile.eof())
 		{
-			std::cout << "\t\t\t" << Day << "-" << Mon << "-" << Year << " \t " << Hour << ":" << Min << " \t\t  " << description << std::endl;
+			std::cout.fill('0');
+			std::cout << "\t\t\t" << std::setw(2) << Day << "-" << std::setw(2) << Mon << "-" << Year << " \t " << std::setw(2) << Hour << ":" << std::setw(2) << Min << " \t\t  " << description << std::endl;
 			std::cout << "--------------------------------------------------------------------------------------------------------\n";
 			
 			listFile.read((char*)this, sizeof(Task));
@@ -131,7 +133,8 @@ void Task::display_task()
 				std::cout << "--------------------------------------------------------------------------------------------------------\n";
 				std::cout << "\t\t\tDATE \t\t TIME \t\t  DISCREPTION\n";
 				std::cout << "--------------------------------------------------------------------------------------------------------\n";
-				std::cout << "\t\t\t" << Day << "-" << Mon << "-" << Year << " \t " << Hour << ":" << Min << " \t\t  " << description << std::endl;
+				std::cout.fill('0');
+				std::cout << "\t\t\t" << std::setw(2) << Day << "-" << std::setw(2) << Mon << "-" << Year << " \t " << std::setw(2) << Hour << ":" << std::setw(2) << Min << " \t\t  " << description << std::endl;
 				std::cout << "--------------------------------------------------------------------------------------------------------\n";
 				break;
 			}
@@ -201,8 +204,10 @@ void Task::update_task(std::string tmp)
 				std::cin >> Day >> Mon >> Year;
 				std::cout << "\n\t\t Time : ";
 				std::cin >> Hour >> Min;
+				std::cin.ignore();
 				std::cout << "\n\t\t Description : ";
-				std::cin >> description;
+				std::cin.ignore();
+				std::getline(std::cin, description);
 
 				int pos = -1 * static_cast<int>(sizeof(Task));
 				listFile.seekp(pos, std::ios::cur);
